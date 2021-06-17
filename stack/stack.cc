@@ -31,7 +31,7 @@ string
 stack::toString()
 {
   string stringified = "[";
-  for (int i = 0; i < pos; i++) {
+  for (int i = 0; i < stack::pos; i++) {
     stringified += to_string(data[i]);
     if (i != pos - 1) stringified += ", ";
   }
@@ -42,7 +42,7 @@ stack::toString()
 bool
 stack::push(int num)
 {
-  if (pos == SIZE) {
+  if (stack::pos == SIZE) {
     cout << "The stack is full.\n";
     return false;
   }
@@ -78,7 +78,8 @@ main()
     cout << "popped: " << newStack.pop() << " from stack" << endl;
   }
 
-  cout << "stack state: " << newStack.toString() << endl; 
+  cout << "stack state: " << newStack.toString() << endl;
 
+  return 0;
 }
 #endif /*QUICKTEST*/
