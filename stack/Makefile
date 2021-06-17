@@ -19,7 +19,7 @@ stack: stack.o
 
 stack.o: stack.h
 
-test: stack.h stack.cc
+test: stack.hpp stack.cpp
 	$(CC) $(CFLAGS) $(TESTFLAGS) $^ -o stack
 	./stack
 	make clean

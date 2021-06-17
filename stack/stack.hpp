@@ -1,5 +1,5 @@
 /**
- * @file stack.h
+ * @file stack.hpp
  * @author siavava <amittaijoel@outlook.com>
  * @brief: header file for stack class
  * @version 0.1
