@@ -9,17 +9,27 @@
  * 
  */
 
-#ifndef __STACK_H
+#ifndef __STACK_HPP
 
-#define __STACK_H
+#define __STACK_HPP
+#define SIZE 4096
+
+
 #include <iostream>
+#include <cstring>
+
+using namespace std;
 
 class stack {
+  int data[SIZE];
+  int pos;
+
 public:
-  void init();
+  stack() { pos = 0; };
   bool push(int i);
   int pop();
-  int size();
+  int size() { return pos; };
+  string toString();
 };
 
-#endif /* __STACK_H */
+#endif /* __STACK_HPP */

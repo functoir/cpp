@@ -20,7 +20,7 @@ class stack {
   int pos;
 
 public:
-  void init() { pos = 0; };
+  stack() { pos = 0; };
   bool push(int i);
   int pop();
   int size() { return pos; };
@@ -65,7 +65,6 @@ int
 main()
 {
   stack newStack;
-  newStack.init();
   for (int i = 0; i < 10; i++) {
     if (newStack.push(i)) {
       cout << "pushed " << i << " to stack" << endl;

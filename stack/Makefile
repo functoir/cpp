@@ -10,20 +10,27 @@ CFLAGS = -Wall -pedantic -std=c++1z
 TESTFLAGS = -DQUICKTEST
 
 ##### program #####
-PROG = stack
+PROGS = stack
 
 ##### all #####
-all: $(PROG)
+all: $(PROGS)
 
 stack: stack.o
 
-stack.o: stack.h
+stack.o: stack.hpp
+stacktest.o: stacktest.cpp stack.hpp
 
-test: stack.hpp stack.cpp
+quicktest: stack.hpp stack.cpp
 	$(CC) $(CFLAGS) $(TESTFLAGS) $^ -o stack
 	./stack
+	make clean
+
+stacktest: stacktest.o stack.o
+	$(CC) $(CFLAGS) $^ -o $@
+	./stacktest
 	make clean
 
 clean:
 	rm -f *.o
 	rm -f stack
+	rm -f stacktest
