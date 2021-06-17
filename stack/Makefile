@@ -26,4 +26,4 @@ test: stack.h stack.cc
 
 clean:
 	rm -f *.o
-	rm -f first
+	rm -f stack
