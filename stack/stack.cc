@@ -10,6 +10,8 @@
  */
 
 #include <iostream>
+#include <cstring>
+
 using namespace std;
 
 #define SIZE 4096
@@ -22,7 +24,20 @@ public:
   bool push(int i);
   int pop();
   int size() { return pos; };
+  string toString();
 };
+
+string 
+stack::toString()
+{
+  string stringified = "[";
+  for (int i = 0; i < pos; i++) {
+    stringified += to_string(data[i]);
+    if (i != pos - 1) stringified += ", ";
+  }
+  stringified += "]";
+  return stringified;
+}
 
 bool
 stack::push(int num)
@@ -57,8 +72,13 @@ main()
     }
   }
 
+  cout << "stack state: " << newStack.toString() << endl; 
+
   while (newStack.size() > 0) {
     cout << "popped: " << newStack.pop() << " from stack" << endl;
   }
+
+  cout << "stack state: " << newStack.toString() << endl; 
+
 }
 #endif /*QUICKTEST*/

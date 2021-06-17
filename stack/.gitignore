@@ -1,0 +1,4 @@
+stack 
+*.o
+*.dYSM
+core
