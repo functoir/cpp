@@ -1,5 +1,3 @@
 *.o
 first
 stacktest
-*.dYSM
-core
