@@ -16,15 +16,15 @@ using namespace std;
 int
 main()
 {
-  cout << "\nSize of fundamental types in CPP:" << endl;
-  cout << "Type:...................Number of bytes" << endl;
+  cout << "\nSize of fundamental types in CPP:" << "\n";
+  cout << "Type:...................Number of bytes" << "\n";
 
-  cout << "char:..................." << sizeof(char) << endl;
-  cout << "short:.................." << sizeof(short) << endl;
-  cout << "int:...................." << sizeof(int) << endl;
-  cout << "long:..................." << sizeof(long) << endl;
-  cout << "float:.................." << sizeof(float) << endl;
-  cout << "double:................." << sizeof(double) << endl;
+  cout << "char:..................." << sizeof(char) << "\n";
+  cout << "short:.................." << sizeof(short) << "\n";
+  cout << "int:...................." << sizeof(int) << "\n";
+  cout << "long:..................." << sizeof(long) << "\n";
+  cout << "float:.................." << sizeof(float) << "\n";
+  cout << "double:................." << sizeof(double) << "\n";
   cout << "long double:............" << sizeof(long double) << endl;
 
   return 0;
