@@ -10,6 +10,7 @@
  */
 
 #include <iostream>
+#include <cmath>
 using namespace std;
 
 int 
@@ -26,6 +27,8 @@ main()
 
   /* print output */
   cout << i << " squared is " << i * i << "\n";
+
+  cout << "square-root of " << i << " is " << sqrt(i) << endl;
 
   /* exit 0 */
   return 0;
