@@ -27,5 +27,17 @@ main()
   cout << "double:................." << sizeof(double) << "\n";
   cout << "long double:............" << sizeof(long double) << endl;
 
+  /* conditional jumps with goto */
+  for (int i = 0; i < 5; i++) {
+    for (int j = 0; j < i; j++) {
+      for (int k = 0; k < j; k++) {
+        cout << i << " " << j << " " << k << endl;
+        if (i == 4) goto exit; 
+      }
+    }
+  }
+
+  exit: cout << "Exiting..." << endl;
+
   return 0;
 }
