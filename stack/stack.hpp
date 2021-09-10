@@ -12,7 +12,7 @@
 #ifndef __STACK_HPP
 
 #define __STACK_HPP
-#define SIZE 4096
+#define SIZE 100
 
 
 #include <iostream>
@@ -28,6 +28,12 @@ public:
   stack() { pos = 0; };
   bool push(int i);
   int pop();
+
+  /**
+   * @brief: get size of stack
+   * 
+   * @return int: number of elements in stack
+   */
   int size() { return pos; };
   string toString();
 };

@@ -25,6 +25,8 @@ quicktest: stack.hpp stack.cpp
 	./stack
 	make clean
 
+.PHONY: all test clean
+
 stacktest: stacktest.o stack.o
 	$(CC) $(CFLAGS) $^ -o $@
 	./stacktest

@@ -1,0 +1,32 @@
+g++    -c -o stacktest.o stacktest.cpp
+g++    -c -o stack.o stack.cpp
+g++ -Wall -pedantic -std=c++1z stacktest.o stack.o -o stacktest
+./stacktest
+pushed 0 to stack
+pushed 1 to stack
+pushed 2 to stack
+pushed 3 to stack
+pushed 4 to stack
+pushed 5 to stack
+pushed 6 to stack
+pushed 7 to stack
+pushed 8 to stack
+pushed 9 to stack
+stack state: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+popped: 9 from stack
+popped: 8 from stack
+popped: 7 from stack
+popped: 6 from stack
+popped: 5 from stack
+popped: 4 from stack
+popped: 3 from stack
+popped: 2 from stack
+popped: 1 from stack
+popped: 0 from stack
+stack state: []
+make clean
+make[1]: Entering directory '/workspace/personal/c++/cpp/stack'
+rm -f *.o
+rm -f stack
+rm -f stacktest
+make[1]: Leaving directory '/workspace/personal/c++/cpp/stack'

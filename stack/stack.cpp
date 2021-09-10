@@ -9,24 +9,19 @@
  * 
  */
 
+/* standard libs */
 #include <iostream>
 #include <cstring>
-
 using namespace std;
 
-#define SIZE 4096
-class stack {
-  int data[SIZE];
-  int pos;
+/* self */
+#include "stack.hpp"
 
-public:
-  stack() { pos = 0; };
-  bool push(int i);
-  int pop();
-  int size() { return pos; };
-  string toString();
-};
-
+/**
+ * @brief: get string representation of stack
+ * 
+ * @return string: string representation of stack state
+ */
 string 
 stack::toString()
 {
@@ -49,12 +44,16 @@ stack::push(int num)
   data[pos++] = num;
   return true;
 }
-
+/**
+ * @brief: pop item at top of stack
+ * 
+ * @return int: item from top of stack
+ */
 int
 stack::pop()
 {
   if (pos == 0) {
-    cout << "The stack is empty.\n";
+    cerr << "The stack is empty.\n";
     return 0;
   }
   return data[--pos];
@@ -78,6 +77,16 @@ main()
   }
 
   cout << "stack state: " << newStack.toString() << endl;
+
+  for (int i = 0; i < 110; i++) {
+    newStack.push(i);
+  }
+
+  cout << newStack.toString() << endl;
+
+  for (int i=0; i < 110; i++) {
+    cout << newStack.pop() << endl;
+  }
 
   return 0;
 }
