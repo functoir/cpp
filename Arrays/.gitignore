@@ -1,3 +1,7 @@
 Array
 *.o
 *.obj
+
+List
+LinkedList
+*.gch
