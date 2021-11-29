@@ -10,9 +10,8 @@
  */
 
 #include <iostream>
+#include "ArrayList.h"
 using namespace std;
-
-#define DEFAULT_SIZE 256
 
 template<typename T>
 class Array {
@@ -24,10 +23,33 @@ private:
 
 
 public:
-  Array() {
+
+  template<typename T>
+  inline ArrayList<T>::ArrayList()
+  {
     size = 0;
-    max_size = DEFAULT_SIZE;
+    max_size = DEFAULT_CAPACITY;
     arr = new T[max_size];
+  }
+
+  template<typename T>
+  inline ArrayList<T>::ArrayList(const ArrayList<T> &other)
+  {
+    size = other.size;
+    max_size = other.getSize();
+    arr = new T[max_size];
+    for (int i = 0; i < size; i++) {
+      arr[i] = other[i];
+    }
+  }
+
+  template<typename T>
+  ArrayList<T>::ArrayList(initializer_list<T> values);
+
+  ~ArrayList();
+
+
+  Array() {
   }
   ~Array() {
     delete[] arr;

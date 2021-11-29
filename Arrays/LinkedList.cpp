@@ -208,7 +208,7 @@ T LinkedList<T>::get(int index)
 
     Node *temp = head;
 
-    for (int i = 0; i < index; i++)
+    for (int i = 0; i < index-1; i++)
     {
       temp = temp->next;
     }
@@ -283,6 +283,12 @@ int LinkedList<T>::lastIndexOf(T value)
     index++;
   }
   return lastIndex;
+}
+
+template<typename T>
+inline T LinkedList<T>::operator[](int index)
+{
+  return get(index);
 }
 
 template<typename U>
@@ -401,6 +407,12 @@ int main()
   for (int i = 0; i < 100; i++) {
     char val = 'a' + i % 26;
     b << val;
+  }
+
+  for (int i = 0; i < 120; i++) {
+    cout << b[i];
+    if (i % 5 == 0) cout << endl;
+    else cout << " ";
   }
 
   // cout << b;

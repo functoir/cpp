@@ -162,6 +162,8 @@ public:
    */
   int lastIndexOf(T value);
 
+  inline T operator[](int index);
+
   /**
    * @brief Inject value into LinkedList.
    * 

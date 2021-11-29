@@ -132,4 +132,4 @@ public:
   // friend void operator>> (istream& ins, const List<U> &list) {}
 };
 
-#endif  /* __LIST_HPP */
+#endif  /* __LIST_ */

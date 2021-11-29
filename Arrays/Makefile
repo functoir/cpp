@@ -24,4 +24,5 @@ quicktest: List.h LinkedList.h LinkedList.cpp
 
 clean:
 	rm -f LinkedList
-	rm -f LinkedList.o
+	rm -f *.o
+	rm -f *.gch
