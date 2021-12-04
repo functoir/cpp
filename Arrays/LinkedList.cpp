@@ -292,26 +292,30 @@ inline T LinkedList<T>::operator[](int index)
 }
 
 template<typename U>
-LinkedList<U>& operator<<(LinkedList<U> &list, U value)
+LinkedList<U> &operator<<(LinkedList<U> &list, U value)
 {
   list.append(value);
   return list;
 }
 
+
+
 template<typename U>
-void operator>>(LinkedList<U> &list, U &var)
+bool operator>>(LinkedList<U> &list, U &var)
 {
+  if (list.isEmpty()) return false;
   var = list.remove(0);
+  return true;
 }
 
 template <typename U>
-ostream& operator<< (ostream& outs, const  LinkedList<U> &list)
+ostream &operator<< (ostream& outs, const  LinkedList<U> &list)
 {
   stringstream ss;
 
   ss << "{";
 
-  typename LinkedList<U>::Node* temp = list.head;
+  typename LinkedList<U>::Node *temp = list.head;
   while (temp != nullptr)
   {
     ss << temp->data;
@@ -420,12 +424,11 @@ int main()
   cout << endl << endl;
 
   int pos = 0;
-  while (!b.isEmpty()) {
-    char val;
-    b >> val;
+  char val;
+  while (b >> val) {
     cout << val << " ";
     if (pos++ % 10 == 9) {
-      cout << endl;
+      cout << "\n";
     }
   }
   cout << "\nb size = " << b.getSize() << endl;

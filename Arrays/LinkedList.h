@@ -14,6 +14,21 @@
 
 #include "List.h"
 
+/**
+ * @brief LinkedList class
+ * Implements the List interface.
+ * Usable to manage an orderded sequence of data.
+ * List elements are stored in a singly linked list.
+ * The List grows on demand -- allocating and deleting on each addition,
+ * so it should be efficient memory-wise.
+ * 
+ * The LinkedList is efficient for insertion at the end and deletion at the beginning of the list.
+ * However, due to lnked-list behavior, it is not efficient for random access.
+ * While it does support random access, use an array-based implementation if you need random access.
+ * 
+ * 
+ * @tparam T: The type of the elements in the list.
+ */
 template <typename T>
 class LinkedList : public List<T>
 {
@@ -170,7 +185,7 @@ public:
    * @param value: value to be injected into LinkedList.
    */
   template <typename U>
-  friend LinkedList<U>& operator<<(LinkedList<U>& list, U value);
+  friend LinkedList<U> &operator<<(LinkedList<U>& list, U value);
 
   /**
    * @brief Inject value from front of LinkedList into variable.
@@ -178,7 +193,7 @@ public:
    * @param var: variable to be injected into.
    */
   template <typename U>
-  friend void operator>>(LinkedList<U> &list, U &var);
+  friend bool operator>>(LinkedList<U> &list, U &var);
   
   /**
    * @brief Operator `<<` overload.
