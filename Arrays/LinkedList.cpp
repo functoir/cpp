@@ -146,7 +146,7 @@ void LinkedList<T>::set(int index, T value)
       else
       {
         Node *temp = head;
-        for (int i = 0; i < index - 1; i++)
+        for (int i=0; i<index-1; i++)
         {
           temp = temp->next;
         }
@@ -329,6 +329,23 @@ ostream &operator<< (ostream& outs, const  LinkedList<U> &list)
 
   outs << ss.str();
   return outs;
+}
+
+template <typename U>
+LinkedList<U> &operator+=(LinkedList<U> &list, const LinkedList<U> &list2)
+{
+  for (int i = 0; i < list2.getSize(); i++)
+  {
+    list.append(list2[i]);
+  }
+  return list;
+}
+
+template <typename U>
+LinkedList<U> &operator+=(LinkedList<U> &list, U value)
+{
+  list.append(value);
+  return list;
 }
 
 template <typename U>

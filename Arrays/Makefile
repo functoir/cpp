@@ -1,7 +1,7 @@
 # Minimal Makefile for Data Structures.
 
 CC = g++
-CFLAGS = -Wall -pedantic -std=c++17 -ggdb
+CFLAGS = -Wall -pedantic -std=c++17 -ggdb -O3
 
 all: LinkedList
 
