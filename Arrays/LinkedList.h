@@ -32,18 +32,13 @@
 template <typename T>
 class LinkedList : public List<T>
 {
-
 private:
   struct Node {
     T data;
     Node* next;
-
     Node() : data((T) 0), next(nullptr) {}
-
     Node(T data) : data(data), next(nullptr) {}
-
     Node(T data, Node* next) : data(data), next(next) {}
-
   };
 
   Node* head;
@@ -63,7 +58,7 @@ public:
    * 
    * @param other: other LinkedList to copy.
    */
-  LinkedList(const LinkedList<T> &other);
+  LinkedList(const List<T> &other);
 
   /**
    * @brief Construct a new Linked List object
@@ -204,7 +199,7 @@ public:
    * @return ostream&: ostream with injected values.
    */
   template <typename U>
-  friend ostream& operator<< (ostream& outs, const LinkedList<U> &list);
+  friend ostream &operator<< (ostream& outs, const LinkedList<U> &list);
 
   /**
    * @brief Operator `>>` overload.

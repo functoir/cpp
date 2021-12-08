@@ -13,112 +13,130 @@
 #include "ArrayList.h"
 using namespace std;
 
+/**
+ * @brief Static function to find allocation cap
+ * 
+ * @param size The size
+ * @return int Upper bound -- always a factor of 2
+ */
+static int findCap(int size) {
+  int cap = 1;
+  while (cap < size) {
+    cap <<= 1;
+  }
+  return cap;
+}
+
 template<typename T>
-class Array {
-
-private:
-  T* arr;
-  int size;
-  int max_size;
-
-
-public:
-
-  template<typename T>
-  inline ArrayList<T>::ArrayList()
-  {
-    size = 0;
-    max_size = DEFAULT_CAPACITY;
-    arr = new T[max_size];
+inline ArrayList<T>::ArrayList(int capacity = _ARRAYLIST_DEFAULT_CAP)
+{
+  if (capacity < 0) {
+    throw "ArrayList: init size must be greater than 0";
   }
+  size = 0;
+  CAP = findCap(capacity);
+  arr = new T[CAP];
+}
 
-  template<typename T>
-  inline ArrayList<T>::ArrayList(const ArrayList<T> &other)
-  {
-    size = other.size;
-    max_size = other.getSize();
-    arr = new T[max_size];
-    for (int i = 0; i < size; i++) {
-      arr[i] = other[i];
-    }
+template<typename T>
+inline ArrayList<T>::ArrayList(const List<T> &other)
+{
+  size = other.getSize();
+  CAP = findCap(size);
+  arr = new T[max_size];
+  for (int i = 0; i < size; i++) {
+    arr[i] = other[i];
   }
+}
 
-  template<typename T>
-  ArrayList<T>::ArrayList(initializer_list<T> values);
-
-  ~ArrayList();
-
-
-  Array() {
+template<typename T>
+ArrayList<T>::ArrayList(initializer_list<T> values)
+{
+  size = values.size();
+  CAP = size;
+  arr = new T[CAP];
+  int i = 0;
+  for (auto it = values.begin(); it != values.end(); it++) {
+    arr[i] = *it;
+    i++;
   }
-  ~Array() {
-    delete[] arr;
-  }
+}
 
-  bool set(int index, T value) {
-    if (index < 0 || index >= size) {
-      return false;
-    }
-    arr[index] = value;
-    return true;
-  }
+template<typename T>
+ArrayList<T>::~ArrayList() 
+{
+  delete[] arr;
+}
 
-  T operator[](int index) {
-    if (index < 0 || index >= size) {
-      cerr << "Error: index out of range." << endl;
-      return 0;
-    }
-    return arr[index];
-  }
-  
-  int getSize() {
-    return size;
-  }
+void append(T value);
 
-  void append(T value) {
+void insert(int index, T value);
 
-    if (size >= max_size) {
-      max_size *= 2;
-      T* new_arr = new T[max_size];
-      for (int i = 0; i < size; i++) {
-        new_arr[i] = arr[i];
-      }
-      delete[] arr;
-      arr = new_arr;
-    }
+T remove(int index);
 
-    arr[size++] = value;
-  }
+T get(int index);
 
-  void print() {
-    for (int i = 0; i < size; i++) {
-      cout << arr[i] << " ";
-      if (i % 10 == 9) {
-        cout << endl;
-      }
-    }
-    cout << endl;
-  }
-};
+void set(int index, T value);
+
+int getSize();
+
+void clear();
+
+bool isEmpty();
+
+bool contains(T value);
+
+int indexOf(T value) = 0;
+
+int find(T value) { return indexOf(value); }
+
+virtual int lastIndexOf(T value) = 0;
+
+template <typename U>
+ArrayList<U> &operator<<(ArrayList<U> &list, U value) {}
+
+/**
+ * @brief Inject value from front of List into variable.
+ * 
+ * @param var: variable to be injected into.
+ */
+template <typename U>
+void operator>>(ArrayList<U> &list, U &var) {}
+
+/**
+ * @brief Operator `<<` overload.
+ * Inject ArrayList values into an ostream.
+ * 
+ * @param outs: ostream to inject values.
+ * @param list: ArrayList containing values.
+ * @return ostream&: ostream with injected values.
+ */
+template <typename U>
+friend ostream& operator<< (ostream& outs, const ArrayList<U> &list) {}
+
+
+template <typename U>
+friend void operator>> (istream& ins, const ArrayList<U> &list) {}
+
 
 int 
 main()
 {
-  Array<int> a;
-  for (int i = 0; i < 1000; i++) {
-    a.append(i);
-  }
+ArrayList<int> a;
+for (int i = 0; i < 1000; i++) {
+  a.append(i);
+}
 
-  a.print();
-  cout << sizeof(a) << endl;
+a.print();
+cout << sizeof(a) << endl;
 
-  Array<char> b;
-  for (int i = 0; i < 100; i++) {
-    b.append('a' + i % 26);
-  }
+ArrayList<char> b;
+for (int i = 0; i < 100; i++) {
+  b.append('a' + i % 26);
+}
 
-  b.print();
-  cout << sizeof(b) << endl;
+b.print();
+cout << sizeof(b) << endl;
 
-  return 0;
+return 0;
 }

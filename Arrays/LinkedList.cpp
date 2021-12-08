@@ -131,7 +131,6 @@ void LinkedList<T>::set(int index, T value)
   if (abs(index) <= size)
   {
     Node *newNode;
-
     if ((newNode = new Node) != nullptr)
     {
       if (index < 0) index += size;
@@ -157,10 +156,10 @@ void LinkedList<T>::set(int index, T value)
       return;
     }
     cerr << "Bad memory allocation" << endl;
-    // throw bad_alloc();
+    throw bad_alloc();
 
   }
-  cerr << "Index {" << index << "} out of range" << endl;
+  cerr << "Index" << index << " out of range for List of size " << size << endl;
     // throw out_of_range("Index out of range");
 }
 
@@ -341,11 +340,21 @@ LinkedList<U> &operator+=(LinkedList<U> &list, const LinkedList<U> &list2)
   return list;
 }
 
-template <typename U>
-LinkedList<U> &operator+=(LinkedList<U> &list, U value)
+template <typename U, typename V>
+LinkedList<U> &operator+=(LinkedList<U> &list, V value)
 {
-  list.append(value);
-  return list;
+  if          (typeid(V) == typeid(U))              list.append(value);
+  else if     (typeid(V) == typeid(LinkedList<U>))  list.appendAll(value);
+  else        cerr << "Type mismatch" << endl;
+  return      list;
+}
+
+template <typename T>
+LinkedList<T> operator+(const LinkedList<T> &list, const LinkedList<T> &list2)
+{
+  LinkedList<T> list3(list);
+  list3 += list2;
+  return list3;
 }
 
 template <typename U>
@@ -356,7 +365,7 @@ void operator>> (istream& ins, const LinkedList<U> &list)
    * @brief if string representation of List, reconstruct.
    * 
    */
-  string starts = "}]>";
+  string starts = "{[<";
   U value;
   if (starts.find(ins.peek()) != -1)
   {

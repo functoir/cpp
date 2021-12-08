@@ -18,7 +18,7 @@
 #include "List.h"
 using namespace std;
 
-#define DEFAULT_CAPACITY 16
+#define _ARRAYLIST_DEFAULT_CAP 16
 
 template <typename T>
 class ArrayList : public List<T> {
@@ -26,21 +26,21 @@ class ArrayList : public List<T> {
 private:
   T* arr;
   int size;
-  int max_size;
+  int CAP;
 
 public:
 
   /**
    * @brief Construct a new, empty ArrayList.
    */
-  ArrayList();
+  ArrayList(int max_size = _ARRAYLIST_DEFAULT_CAP);
 
   /**
    * @brief Construct a new LinkedList, copy data.
    * 
    * @param other: other LinkedList to copy.
    */
-  ArrayList(const LinkedList<T> &other);
+  ArrayList(const List<T> &other);
 
   /**
    * @brief Construct a new Linked List object
