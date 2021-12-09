@@ -30,7 +30,7 @@ jobs:
       - run:
           name: "Automatic Test"
           command: |
-            sudo apt install make
+            sudo apt install build-essential
             cd ./data-structures
             make quicktest &> AUTO_TEST
             if ($? == 0); then
