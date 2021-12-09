@@ -30,6 +30,8 @@ jobs:
       - run:
           name: "Automatic Test"
           command: |
+            apt install cd
+            apt install make
             cd ./data-structures
             make quicktest &> AUTO_TEST
             if ($? == 0); then
