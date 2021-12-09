@@ -70,7 +70,7 @@ void LinkedList<T>::append(T value)
     newNode->data = value;
     newNode->next = nullptr;
 
-    if (head == nullptr)
+    if (length == 0)
     {
       head = newNode;
       tail = newNode;
@@ -96,7 +96,6 @@ void LinkedList<T>::insert(int index, T value)
   if (abs(index) <= length)
   {
     Node *newNode = new Node;
-
     if (newNode != nullptr)
     {
       if (index < 0) index += length;
@@ -199,21 +198,18 @@ T LinkedList<T>:: remove(int index)
 template<typename T>
 T LinkedList<T>::get(int index)
 {
-  if (abs(index) <= length)
+  if (abs(index) < length)
   { 
     if (index < 0) index += length;
-
     Node *temp = head;
-
-    for (int i = 0; i < index-1; i++)
-    {
-      temp = temp->next;
-    }
+    while (index--) temp = temp->next;
     return temp->data;
   }
-  cerr << "Index {" << index << "} out of range" << endl;
-  return (T) 0;
-  // throw out_of_range("Index out of range");
+  else {
+    cerr << "Index {" << index << "} out of range" << endl;
+    return (T) 0;
+    // throw out_of_range("Index out of range");
+  }
 }
 
 template<typename T>
@@ -355,6 +351,7 @@ LinkedList<U> &operator<<(LinkedList<U> &list, U value)
 }
 
 
+/**************** FRIEND OPERATOR FUNCTIONS ****************/
 
 template<typename U>
 bool operator>>(LinkedList<U> &list, U &var)
@@ -516,17 +513,17 @@ int main()
   }
   cout << "\nb size = " << b.size() << endl;
 
-  List<int> *list2 = new LinkedList<int>();
-  int lim = 1 << 16;
+  List<unsigned int> *list2 = new LinkedList<unsigned int>();
+  unsigned int lim = 1 << 21;
   cout << "lim = " << lim << endl;
-  for (int i = 1; i < lim; i++) {
+  for (int i = 0; i < lim; i++) {
     list2->append(i);
   }
   cout << "list2 size = " << list2->size() << endl;
   cout << "range " << list2->get(0) << " to " << list2->get(list2->size() - 1) << "\n\n" << endl;
 
   lim = list2->size();
-  for (int i = 0; i < lim; i+=1000) {
+  for (unsigned int i = 0; i < lim; i+=1000) {
     cout << i << ": " << list2->get(i) << "\n";
   }
   cout << endl;
@@ -546,6 +543,8 @@ int main()
     cout << q->dequeue() << " ";
   }
   cout << endl;
+
+  delete q;
 
   return 0;
 }
