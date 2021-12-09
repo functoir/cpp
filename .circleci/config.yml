@@ -31,10 +31,10 @@ jobs:
           name: "Automatic Test"
           command: |
             cd ./data-structures
-            if [ make quicktest &> AUTO_TEST.out ]; then
+            if [ make quicktest &> AUTO_TEST ]; then
               git config --global user.email "amittaijoel@outlook.com"
               git config --global user.name "Amittai -- circleci agent"
-              git add -A
+              git add AUTO_TEST
               git commit -m 'TEST'
               git push --set-upstream origin main
             fi
