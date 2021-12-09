@@ -31,12 +31,12 @@ jobs:
           name: "Automatic Test"
           command: |
             sudo apt install build-essential
-            cd ./data-structures
-            make quicktest &> AUTO_TEST
+            directory="./data-structures"
+            make -C "$directory" quicktest &> "$directory/AUTO_TEST"
             if ($? == 0); then
               git config --global user.email "amittaijoel@outlook.com"
               git config --global user.name "Amittai -- circleci agent"
-              git add AUTO_TEST
+              git add "$directory/AUTO_TEST"
               git commit -m 'TEST'
               git push --set-upstream origin main
             fi
