@@ -15,26 +15,24 @@
 #include <iostream>
 #include <sstream>
 
-int DUMMY = 0; 
-
 template<typename T>
 inline LinkedList<T>::LinkedList()
 {
   head = tail = nullptr;
-  size = 0;
+  length = 0;
 }
 
 template<typename T>
-inline LinkedList<T>::LinkedList(const LinkedList<T> &other)
+inline LinkedList<T>::LinkedList(const List<T> &other)
 {
   head = tail = nullptr;
-  size = 0;
+  length = 0;
 
-  Node *temp = other.head;
-  while (temp != nullptr)
+  int size = (int) other.size();
+
+  for (int i = 0; i < size; i++)
   {
-    append(temp->data);
-    temp = temp->next;
+    append(other[i]);
   }
 }
 
@@ -43,7 +41,7 @@ inline LinkedList<T>::LinkedList(initializer_list<T> values)
 {
   head = nullptr;
   tail = nullptr;
-  size = 0;
+  length = 0;
 
   for (auto &value : values)
   {
@@ -82,7 +80,7 @@ void LinkedList<T>::append(T value)
       tail->next = newNode;
       tail = newNode;
     }
-    size++;
+    length++;
     return;
   }
   cerr << "Error: Memory allocation failed." << endl;
@@ -91,17 +89,17 @@ void LinkedList<T>::append(T value)
 template<typename T>
 void LinkedList<T>::insert(int index, T value)
 {
-  if (index == 0 && size == 0) {
+  if (index == 0 && length == 0) {
     append(value);
     return;
   }
-  if (abs(index) <= size)
+  if (abs(index) <= length)
   {
     Node *newNode = new Node;
 
     if (newNode != nullptr)
     {
-      if (index < 0) index += size;
+      if (index < 0) index += length;
       newNode->data = value;
       newNode->next = nullptr;
 
@@ -120,7 +118,7 @@ void LinkedList<T>::insert(int index, T value)
         newNode->next = temp->next;
         temp->next = newNode;
       }
-      size++;
+      length++;
     }
   }
 }
@@ -128,12 +126,12 @@ void LinkedList<T>::insert(int index, T value)
 template<typename T>
 void LinkedList<T>::set(int index, T value)
 {
-  if (abs(index) <= size)
+  if (abs(index) <= length)
   {
     Node *newNode;
     if ((newNode = new Node) != nullptr)
     {
-      if (index < 0) index += size;
+      if (index < 0) index += length;
       newNode->data = value;
       newNode->next = nullptr;
 
@@ -152,23 +150,23 @@ void LinkedList<T>::set(int index, T value)
         newNode->next = temp->next;
         temp->next = newNode;
       }
-      size++;
+      length++;
       return;
     }
     cerr << "Bad memory allocation" << endl;
     throw bad_alloc();
 
   }
-  cerr << "Index" << index << " out of range for List of size " << size << endl;
+  cerr << "Index" << index << " out of range for List of size " << length << endl;
     // throw out_of_range("Index out of range");
 }
 
 template<typename T>
 T LinkedList<T>:: remove(int index)
 {
-  if (abs(index) <= size)
+  if (abs(index) <= length)
   {
-    if (index < 0) index += size;
+    if (index < 0) index += length;
 
     Node *temp = head;
     T data;
@@ -190,7 +188,7 @@ T LinkedList<T>:: remove(int index)
       data = temp2->data;
       delete temp2;
     }
-    size--;
+    length--;
     return data;
   }
   cerr << "Index {" << index << "} out of range" << endl;
@@ -201,9 +199,9 @@ T LinkedList<T>:: remove(int index)
 template<typename T>
 T LinkedList<T>::get(int index)
 {
-  if (abs(index) <= size)
+  if (abs(index) <= length)
   { 
-    if (index < 0) index += size;
+    if (index < 0) index += length;
 
     Node *temp = head;
 
@@ -219,10 +217,10 @@ T LinkedList<T>::get(int index)
 }
 
 template<typename T>
-inline int LinkedList<T>::getSize() { return size; }
+inline size_t LinkedList<T>::size() { return length; }
 
 template<typename T>
-inline bool LinkedList<T>::isEmpty() { return size == 0; }
+inline bool LinkedList<T>::isEmpty() { return length == 0; }
 
 template<typename T>
 void LinkedList<T>::clear()
@@ -234,7 +232,7 @@ void LinkedList<T>::clear()
     delete temp;
   }
   tail = nullptr;
-  size = 0;
+  length = 0;
 }
 
 template <typename T>
@@ -283,6 +281,65 @@ int LinkedList<T>::lastIndexOf(T value)
   }
   return lastIndex;
 }
+
+template <typename T>
+void LinkedList<T>::enqueue(T item)
+{
+  if (head == nullptr)
+  {
+    head = new Node;
+    head->data = item;
+    head->next = nullptr;
+    tail = head;
+  }
+  else
+  {
+    tail->next = new Node;
+    tail = tail->next;
+    tail->data = item;
+    tail->next = nullptr;
+  }
+  length++;
+}
+
+template<typename T>
+T LinkedList<T>::dequeue()
+{
+  if (head == nullptr)
+  {
+    cerr << "Error: Queue is empty." << endl;
+    return (T) 0;
+  }
+  else
+  {
+    Node *temp = head;
+    head = head->next;
+    T data = temp->data;
+    delete temp;
+
+    length--;
+    return data;
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 template<typename T>
 inline T LinkedList<T>::operator[](int index)
@@ -333,7 +390,7 @@ ostream &operator<< (ostream& outs, const  LinkedList<U> &list)
 template <typename U>
 LinkedList<U> &operator+=(LinkedList<U> &list, const LinkedList<U> &list2)
 {
-  for (int i = 0; i < list2.getSize(); i++)
+  for (int i = 0; i < list2.size(); i++)
   {
     list.append(list2[i]);
   }
@@ -406,7 +463,7 @@ int main()
   list.append(26);
   list.append(27);
   list << 1 << 2 << 3 << 4 << 5;
-  cout << "list.size() = " << list.getSize() << endl;
+  cout << "list.size() = " << list.size() << endl;
   cout << list << endl;
 
   auto var = -1;
@@ -417,7 +474,7 @@ int main()
   }
 
   cout << list << endl;
-
+  
   auto &a = list;
   for (int i = 0; i < 100; i++) {
     a << i;
@@ -446,7 +503,7 @@ int main()
   }
 
   // cout << b;
-  cout << endl << "b size = " << b.getSize() << endl;
+  cout << endl << "b size = " << b.size() << endl;
   cout << endl << endl;
 
   int pos = 0;
@@ -457,7 +514,38 @@ int main()
       cout << "\n";
     }
   }
-  cout << "\nb size = " << b.getSize() << endl;
+  cout << "\nb size = " << b.size() << endl;
+
+  List<int> *list2 = new LinkedList<int>();
+  int lim = 1 << 16;
+  cout << "lim = " << lim << endl;
+  for (int i = 1; i < lim; i++) {
+    list2->append(i);
+  }
+  cout << "list2 size = " << list2->size() << endl;
+  cout << "range " << list2->get(0) << " to " << list2->get(list2->size() - 1) << "\n\n" << endl;
+
+  lim = list2->size();
+  for (int i = 0; i < lim; i+=1000) {
+    cout << i << ": " << list2->get(i) << "\n";
+  }
+  cout << endl;
+
+  for (int i = 0; i < 10; i++) {
+    cout << list2->get(i) << " ";
+  }
+  delete list2;
+
+  cout << "\n\nTESTING QUEUE\n\n" << endl;
+  Queue<int> *q = new LinkedList<int>();
+  for (int i = 0; i < 10; i++) {
+    q->enqueue(i);
+  }
+  cout << "q size = " << q->size() << endl;
+  while (! q->isEmpty()) {
+    cout << q->dequeue() << " ";
+  }
+  cout << endl;
 
   return 0;
 }

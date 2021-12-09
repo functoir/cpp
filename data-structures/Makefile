@@ -5,18 +5,14 @@ CFLAGS = -Wall -pedantic -std=c++17 -ggdb -O3
 
 all: LinkedList
 
-LinkedList: LinkedList.o List.o
-	$(CC) $(CFLAGS) LinkedList.o -o LinkedList
+LinkedList: LinkedList.o
+	$(CC) $(CFLAGS) $^ -o $@
 
-LinkedList.o: List.h LinkedList.h LinkedList.cpp 
+LinkedList.o: LinkedList.cpp 
 	$(CC) -c $(CFLAGS) $^
 
-List.o: List.h
-	$(CC) -c $(CFLAGS) $^
-
-quicktest: List.h LinkedList.h LinkedList.cpp 
+quicktest: LinkedList.cpp 
 	$(CC) -c $(CFLAGS) -DUNITTEST $^
-	$(CC) $(CFLAGS) -c List.h
 	make LinkedList
 	./LinkedList
 

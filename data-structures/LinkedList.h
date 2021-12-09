@@ -13,6 +13,7 @@
 #define __LINKEDLIST_
 
 #include "List.h"
+#include "Queue.h"
 
 /**
  * @brief LinkedList class
@@ -26,24 +27,20 @@
  * However, due to lnked-list behavior, it is not efficient for random access.
  * While it does support random access, use an array-based implementation if you need random access.
  * 
- * 
  * @tparam T: The type of the elements in the list.
  */
 template <typename T>
-class LinkedList : public List<T>
+class LinkedList : public List<T>, public Queue<T>
 {
 private:
   struct Node {
     T data;
-    Node* next;
-    Node() : data((T) 0), next(nullptr) {}
-    Node(T data) : data(data), next(nullptr) {}
-    Node(T data, Node* next) : data(data), next(next) {}
+    Node *previous, *next;
   };
 
   Node* head;
   Node* tail;
-  int size;
+  size_t length;
 
 public:
 
@@ -86,7 +83,6 @@ public:
    * @brief Insert item at specific index in List.
    * Negative index means from the end of the list.
    * Use responsibly!
-   * 
    */
   void insert(int index, T value);
 
@@ -114,13 +110,6 @@ public:
    * @param value 
    */
   void set(int index, T value);
-
-  /**
-   * @brief Get the size of the list.
-   * 
-   * @return int 
-   */
-  int getSize();
 
   /**
    * @brief clear the List.
@@ -161,7 +150,7 @@ public:
    * @return int: index of value in List.
    * @return -1: value not found in List.
    */
-  inline int find(T value) { return indexOf(value); }
+  virtual inline int find(T value) { return indexOf(value); }
 
   /**
    * @brief Get the last index of a specific value.
@@ -170,7 +159,56 @@ public:
    * @return int: last index of value in List.
    * @return -1: value not found in List.
    */
-  int lastIndexOf(T value);
+  virtual int lastIndexOf(T value);
+
+  /* QUEUE METHODS */
+
+  /**
+   * @brief Add an element to the queue
+   * 
+   * @param element: enqueue element
+   */
+  virtual void enqueue(T item);
+
+  /**
+   * @brief Remove an element from the queue
+   * 
+   * @return T: dequeued element
+   */
+  virtual T dequeue();
+
+  /**
+   * @brief Get the size of the queue
+   * 
+   * @return size_t: queue size
+   */
+  virtual size_t size();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   inline T operator[](int index);
 

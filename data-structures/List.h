@@ -20,9 +20,9 @@ template <typename T>
 class List {
 
 protected: 
-  List() { };
-  virtual ~List() { };
+  List() {};
 public:
+  virtual ~List() { };
 
   /**
    * @brief Adds an element at the end of the list
@@ -52,7 +52,7 @@ public:
   virtual void set(int index, T value) = 0;
 
   /** Get the size of the List. */
-  virtual int getSize() = 0;
+  virtual size_t size() = 0;
 
   /** Clear the List. */
   virtual void clear() = 0;
