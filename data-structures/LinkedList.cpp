@@ -514,16 +514,16 @@ int main()
   cout << "\nb size = " << b.size() << endl;
 
   List<unsigned int> *list2 = new LinkedList<unsigned int>();
-  unsigned int lim = 1 << 21;
+  unsigned int lim = 1 << 25;
   cout << "lim = " << lim << endl;
-  for (int i = 0; i < lim; i++) {
+  for (unsigned int i = 0; i < lim; i++) {
     list2->append(i);
   }
   cout << "list2 size = " << list2->size() << endl;
   cout << "range " << list2->get(0) << " to " << list2->get(list2->size() - 1) << "\n\n" << endl;
 
   lim = list2->size();
-  for (unsigned int i = 0; i < lim; i+=1000) {
+  for (unsigned int i = 0; i < lim; i+=1000000) {
     cout << i << ": " << list2->get(i) << "\n";
   }
   cout << endl;

@@ -3,6 +3,8 @@
 CC = g++
 CFLAGS = -Wall -pedantic -std=c++17 -ggdb -O3
 
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./LinkedList
+
 all: LinkedList
 
 LinkedList: LinkedList.o
@@ -22,3 +24,6 @@ clean:
 	rm -f LinkedList
 	rm -f *.o
 	rm -f *.gch
+
+v_linkedlist: LinkedList
+	$(VALGRIND) ./LinkedList
