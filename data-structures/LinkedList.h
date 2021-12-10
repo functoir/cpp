@@ -14,6 +14,7 @@
 
 #include "List.h"
 #include "Queue.h"
+#include "Stack.h"
 
 /**
  * @brief LinkedList class
@@ -30,7 +31,7 @@
  * @tparam T: The type of the elements in the list.
  */
 template <typename T>
-class LinkedList : public List<T>, public Queue<T>
+class LinkedList : public List<T>, public Queue<T>, public Stack<T>
 {
 private:
   struct Node {
@@ -72,6 +73,13 @@ public:
    */
   ~LinkedList();
 
+    /**
+   * @brief Get the size of the LinkedList
+   * 
+   * @return size_t: queue size
+   */
+  virtual inline size_t size() { return length; }
+
   /**
    * @brief Adds an element at the end of the list
    * 
@@ -84,7 +92,7 @@ public:
    * Negative index means from the end of the list.
    * Use responsibly!
    */
-  void insert(int index, T value);
+  virtual void insert(int index, T value);
 
   /**
    * @brief Remove item at specific index in List.
@@ -92,7 +100,7 @@ public:
    * Use responsibly!
    * 
    */
-  T remove(int index);
+  virtual T remove(int index);
 
   /**
    * @brief Get the element at a specific index in the List.
@@ -101,7 +109,7 @@ public:
    * 
    * @return T 
    */
-  T get(int index);
+  virtual T get(int index);
 
   /**
    * @brief Set value at specific index.
@@ -109,7 +117,7 @@ public:
    * @param index 
    * @param value 
    */
-  void set(int index, T value);
+  virtual void set(int index, T value);
 
   /**
    * @brief clear the List.
@@ -123,7 +131,7 @@ public:
    * @return true: List is empty
    * @return false: List is not empty
    */
-  bool isEmpty();
+  inline bool isEmpty() { return length == 0; }
 
   /**
    * @brief Check if LinkedList contains a specific value.
@@ -164,51 +172,42 @@ public:
   /* QUEUE METHODS */
 
   /**
-   * @brief Add an element to the queue
+   * @brief enqueue an item (Queue interface)
    * 
    * @param element: enqueue element
    */
-  virtual void enqueue(T item);
+  virtual inline void enqueue(T item) { append(item); }
 
   /**
-   * @brief Remove an element from the queue
+   * @brief Remove an element from the LinkedList (Queue interface)
    * 
    * @return T: dequeued element
    */
-  virtual T dequeue();
+  virtual T dequeue() { return remove(0); }
+
+/****************** STACK METHODS ********************/
+  /**
+   * @brief Push element to the LinkedList (Stack interface)
+   * 
+   * @param element: push element
+   */
+  virtual inline void push(T item) { insert(0, item); }
 
   /**
-   * @brief Get the size of the queue
+   * @brief Pop element from the LinkedList (Stack interface)
    * 
-   * @return size_t: queue size
+   * @return T: pop element
    */
-  virtual size_t size();
+  virtual inline T pop() { return remove(0); }
 
+  /**
+   * @brief Get the top element of the LinkedList (Stack interface)
+   * 
+   * @return T: top element
+   */
+  virtual inline T peek() { return get(0); }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  /* friend functions */
 
   inline T operator[](int index);
 

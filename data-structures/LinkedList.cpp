@@ -99,6 +99,7 @@ void LinkedList<T>::insert(int index, T value)
     if (newNode != nullptr)
     {
       if (index < 0) index += length;
+
       newNode->data = value;
       newNode->next = nullptr;
 
@@ -213,12 +214,6 @@ T LinkedList<T>::get(int index)
 }
 
 template<typename T>
-inline size_t LinkedList<T>::size() { return length; }
-
-template<typename T>
-inline bool LinkedList<T>::isEmpty() { return length == 0; }
-
-template<typename T>
 void LinkedList<T>::clear()
 {
   while (head != nullptr)
@@ -277,65 +272,6 @@ int LinkedList<T>::lastIndexOf(T value)
   }
   return lastIndex;
 }
-
-template <typename T>
-void LinkedList<T>::enqueue(T item)
-{
-  if (head == nullptr)
-  {
-    head = new Node;
-    head->data = item;
-    head->next = nullptr;
-    tail = head;
-  }
-  else
-  {
-    tail->next = new Node;
-    tail = tail->next;
-    tail->data = item;
-    tail->next = nullptr;
-  }
-  length++;
-}
-
-template<typename T>
-T LinkedList<T>::dequeue()
-{
-  if (head == nullptr)
-  {
-    cerr << "Error: Queue is empty." << endl;
-    return (T) 0;
-  }
-  else
-  {
-    Node *temp = head;
-    head = head->next;
-    T data = temp->data;
-    delete temp;
-
-    length--;
-    return data;
-  }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 template<typename T>
 inline T LinkedList<T>::operator[](int index)
@@ -534,17 +470,37 @@ int main()
   delete list2;
 
   cout << "\n\nTESTING QUEUE\n\n" << endl;
-  Queue<int> *q = new LinkedList<int>();
+  LinkedList<int> l2;
+  Queue<int> *q = &l2;;
   for (int i = 0; i < 10; i++) {
     q->enqueue(i);
   }
   cout << "q size = " << q->size() << endl;
-  while (! q->isEmpty()) {
+  cout << "Queue: " << l2 << endl;
+
+  cout << "dequeuing...\n\n";
+  for (int i = 0; i < 10; i++) {
     cout << q->dequeue() << " ";
   }
   cout << endl;
 
-  delete q;
+  cout << "\n\nTESTING STACK\n\n" << endl;
+
+  LinkedList<int> l3;
+  Stack<int> *stack = &l3;
+
+  cout << "Pushing...\n";
+  for (int i = 0; i < 10; i++) {
+    stack->push(i);
+  }
+
+  cout << "Stack: " << l3 << endl;
+
+  cout << "Popping...\n";
+  for (int i = 0; i < 10; i++) {
+    cout << stack->pop() << " ";
+  }
+  cout << endl;
 
   return 0;
 }
