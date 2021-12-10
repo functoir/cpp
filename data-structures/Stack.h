@@ -13,42 +13,42 @@ using namespace std;
  */
 template<typename T>
 class Stack {
-	public:
-		Stack() {};
+  public:
+    Stack() {};
 
-		/**
-		 * @brief Push an element to the stack.
-		 * 
-		 * @param element: The element to be pushed.
-		 */
-		virtual void push(T item) = 0;
+    /**
+     * @brief Push an element to the stack.
+     * 
+     * @param element: The element to be pushed.
+     */
+    virtual void push(T item) = 0;
 
-		/**
-		 * @brief Pop an element from the stack.
-		 * 
-		 * @return T: The element popped.
-		 */
-		virtual T pop() = 0;
+    /**
+     * @brief Pop an element from the stack.
+     * 
+     * @return T: The element popped.
+     */
+    virtual T pop() = 0;
 
-		/**
-		 * @brief Check if the stack is empty.
-		 * 
-		 * @return true: The stack is empty.
-		 * @return false: The stack is not empty.
-		 */
-		virtual bool isEmpty() = 0;
+    /**
+     * @brief Check if the stack is empty.
+     * 
+     * @return true: The stack is empty.
+     * @return false: The stack is not empty.
+     */
+    virtual bool isEmpty() = 0;
 
-		/**
-		 * @brief Get the size of the stack.
-		 * 
-		 * @return int: The size of the stack.
-		 */
-		virtual size_t size() = 0;
+    /**
+     * @brief Get the size of the stack.
+     * 
+     * @return int: The size of the stack.
+     */
+    virtual size_t size() = 0;
 
-		/**
-		 * @brief Get valus at top of Stack, but don't remove it from the stack.
-		 * 
-		 * @return T: The top element of the stack.
-		 */
-		virtual T peek() = 0;
+    /**
+     * @brief Get valus at top of Stack, but don't remove it from the stack.
+     * 
+     * @return T: The top element of the stack.
+     */
+    virtual T peek() = 0;
 };
