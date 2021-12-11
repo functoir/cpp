@@ -41,7 +41,7 @@ private:
 
   Node* head;
   Node* tail;
-  size_t length;
+  int length;
 
 public:
 
@@ -76,9 +76,9 @@ public:
     /**
    * @brief Get the size of the LinkedList
    * 
-   * @return size_t: queue size
+   * @return int: queue size
    */
-  virtual inline size_t size() { return length; }
+  virtual inline int size() { return length; }
 
   /**
    * @brief Adds an element at the end of the list
@@ -86,6 +86,13 @@ public:
    * @param element 
    */
   void append(T value);
+
+  /**
+   * @brief Add all elements in other iterable to this List.
+   * 
+   * @param other 
+   */
+  virtual void appendAll(List<T> &other);
 
   /**
    * @brief Insert item at specific index in List.
@@ -110,6 +117,16 @@ public:
    * @return T 
    */
   virtual T get(int index);
+
+    /**
+   * @brief Get the element at a specific index in the List, by reference.
+   * This allows reassigning the element to a different value.
+   * Negative index means from the end of the list.
+   * Use responsibly!
+   * 
+   * @return T 
+   */
+  virtual T& getRef(int index);
 
   /**
    * @brief Set value at specific index.
@@ -209,7 +226,23 @@ public:
 
   /* friend functions */
 
-  inline T operator[](int index);
+  /**
+   * @brief Overload for [] operator.
+   * Note: This method returns a reference to the element at the specified index.
+   * This allows both "get" and "set" operations to be performed on the element.
+   * For example:
+    ```
+    LinkedList<int> list = {1, 2, 3};
+    list[0] = 4;
+    cout << list[0]; // prints 4
+    ```
+   * However, this method is unsafe and should not be used for invalid indices -- 
+   * it will throw an exception and halt the program.
+   * 
+   * @param index The index to get.
+   * @return T& Reference to the value at the specified index.
+   */
+  virtual T &operator[](int index) { return this->getRef(index); }
 
   /**
    * @brief Inject value into LinkedList.
@@ -248,6 +281,32 @@ public:
    */
   template <typename U>
   friend void operator>> (istream& ins, const LinkedList<U> &list);
+
+  /**
+   * @brief += operator overload.
+   * Usage: list1 += list2;
+   * Modifies list1 by appending the values in list2 to list1.
+   * 
+   * @tparam T : The type of the elements in the List. They must be the same.
+   * @param list Initial list.
+   * @param list2 Other List.
+   * @return LinkedList<V>& List reference. Allows reference chaining.
+   */
+  template <typename V>
+  LinkedList<T> &operator+=(LinkedList<T> &list, LinkedList<T> &list2);
+
+  /**
+   * @brief Add two Lists and return a new List.
+   * The two Lists are not modified in place.
+   * However, the new List is a "new" object.
+   * If using it through a variable, make sure to call `delete` on *a pointer* to the list.
+   * If using it implicitly, then it results in a memory leak.
+   * Make sure you're okay with that. 
+   * 
+   * @tparam T 
+   */
+  template <typename T>
+  LinkedList<T> &operator+(LinkedList<T> &list, LinkedList<T> &list2)
 };
 
 #endif /* __LINKEDLIST_ */

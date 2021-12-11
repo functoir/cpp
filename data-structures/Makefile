@@ -3,7 +3,7 @@
 CC = g++
 CFLAGS = -Wall -pedantic -std=c++17 -ggdb -O3
 
-VALGRIND = valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes ./LinkedList
+VALGRIND = valgrind --leak-check=full --show-leak-kinds=all -s --track-origins=yes ./LinkedList
 
 all: LinkedList
 

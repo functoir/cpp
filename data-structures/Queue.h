@@ -62,7 +62,7 @@ class Queue {
     /**
      * @brief Get the size of the queue
      * 
-     * @return size_t: queue size
+     * @return int: queue size
      */
-    virtual size_t size() = 0;
+    virtual int size() = 0;
 };

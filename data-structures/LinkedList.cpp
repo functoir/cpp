@@ -9,11 +9,13 @@
  * @copyright Copyright (c) 2021
  * 
  */
+#include <iostream>
+#include <sstream>
+#include <typeinfo>
+#include <algorithm>
 
 /* LinkedList interface */
 #include "LinkedList.h"
-#include <iostream>
-#include <sstream>
 
 template<typename T>
 inline LinkedList<T>::LinkedList()
@@ -32,7 +34,7 @@ inline LinkedList<T>::LinkedList(const List<T> &other)
 
   for (int i = 0; i < size; i++)
   {
-    append(other[i]);
+    *this << other[i];
   }
 }
 
@@ -85,6 +87,16 @@ void LinkedList<T>::append(T value)
   }
   cerr << "Error: Memory allocation failed." << endl;
 }
+
+template <typename T>
+void LinkedList<T>::appendAll(List<T> &other)
+{
+  for (int i = 0; i < other.size(); i++)
+  {
+    append(other[i]);
+  }
+}
+
 
 template<typename T>
 void LinkedList<T>::insert(int index, T value)
@@ -214,6 +226,22 @@ T LinkedList<T>::get(int index)
 }
 
 template<typename T>
+T& LinkedList<T>::getRef(int index)
+{
+  if (abs(index) < length)
+  { 
+    if (index < 0) index += length;
+    Node *temp = head;
+    while (index--) temp = temp->next;
+    return temp->data;
+  }
+  else {
+    cerr << "Index {" << index << "} out of range" << endl;
+    throw out_of_range("Index out of range");
+  }
+}
+
+template<typename T>
 void LinkedList<T>::clear()
 {
   while (head != nullptr)
@@ -273,12 +301,6 @@ int LinkedList<T>::lastIndexOf(T value)
   return lastIndex;
 }
 
-template<typename T>
-inline T LinkedList<T>::operator[](int index)
-{
-  return get(index);
-}
-
 template<typename U>
 LinkedList<U> &operator<<(LinkedList<U> &list, U value)
 {
@@ -320,31 +342,23 @@ ostream &operator<< (ostream& outs, const  LinkedList<U> &list)
   return outs;
 }
 
-template <typename U>
-LinkedList<U> &operator+=(LinkedList<U> &list, const LinkedList<U> &list2)
+template <typename V>
+LinkedList<V> &operator+=(LinkedList<V> &list, LinkedList<V> &list2)
 {
   for (int i = 0; i < list2.size(); i++)
   {
-    list.append(list2[i]);
+    list.append(list2.get(i));
   }
   return list;
 }
 
-template <typename U, typename V>
-LinkedList<U> &operator+=(LinkedList<U> &list, V value)
-{
-  if          (typeid(V) == typeid(U))              list.append(value);
-  else if     (typeid(V) == typeid(LinkedList<U>))  list.appendAll(value);
-  else        cerr << "Type mismatch" << endl;
-  return      list;
-}
-
 template <typename T>
-LinkedList<T> operator+(const LinkedList<T> &list, const LinkedList<T> &list2)
+LinkedList<T> &operator+(LinkedList<T> &list, LinkedList<T> &list2)
 {
-  LinkedList<T> list3(list);
-  list3 += list2;
-  return list3;
+  LinkedList<T> *list3 = new LinkedList<T>();
+  *list3 += list;
+  *list3 += list2;
+  return *list3;
 }
 
 template <typename U>
@@ -430,7 +444,7 @@ int main()
   }
 
   for (int i = 0; i < 120; i++) {
-    cout << b[i];
+    cout << b.get(i);
     if (i % 5 == 0) cout << endl;
     else cout << " ";
   }
@@ -449,25 +463,25 @@ int main()
   }
   cout << "\nb size = " << b.size() << endl;
 
-  List<unsigned int> *list2 = new LinkedList<unsigned int>();
-  unsigned int lim = 1 << 25;
-  cout << "lim = " << lim << endl;
-  for (unsigned int i = 0; i < lim; i++) {
-    list2->append(i);
-  }
-  cout << "list2 size = " << list2->size() << endl;
-  cout << "range " << list2->get(0) << " to " << list2->get(list2->size() - 1) << "\n\n" << endl;
+  // List<unsigned int> *list2 = new LinkedList<unsigned int>();
+  // unsigned int lim = 1 << 25;
+  // cout << "lim = " << lim << endl;
+  // for (unsigned int i = 0; i < lim; i++) {
+  //   list2->append(i);
+  // }
+  // cout << "list2 size = " << list2->size() << endl;
+  // cout << "range " << list2->get(0) << " to " << list2->get(list2->size() - 1) << "\n\n" << endl;
 
-  lim = list2->size();
-  for (unsigned int i = 0; i < lim; i+=1000000) {
-    cout << i << ": " << list2->get(i) << "\n";
-  }
-  cout << endl;
+  // lim = list2->size();
+  // for (unsigned int i = 0; i < lim; i+=1000000) {
+  //   cout << i << ": " << list2->get(i) << "\n";
+  // }
+  // cout << endl;
 
-  for (int i = 0; i < 10; i++) {
-    cout << list2->get(i) << " ";
-  }
-  delete list2;
+  // for (int i = 0; i < 10; i++) {
+  //   cout << list2->get(i) << " ";
+  // }
+  // delete list2;
 
   cout << "\n\nTESTING QUEUE\n\n" << endl;
   LinkedList<int> l2;
@@ -502,6 +516,23 @@ int main()
   }
   cout << endl;
 
+  cout << "\ntesting operators\n" << endl;
+  LinkedList<int> l4 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+  LinkedList<int> l5 = { 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
+  cout << "l4 = " << l4 << endl;
+  cout << "l5 = " << l5 << endl;
+
+  auto l6 = l4 + l5;
+  cout << "l4 + l5 = " << l6 << endl;
+  cout << "l4 = " << l4 << endl;
+  cout << "l4 += l5 = " << (l4 += l5) << endl;
+  cout << "l4 = " << l4 << endl;
+
+  for (int i = 0; i < l4.size(); i++) {
+    l4[i] += 1000;
+  }
+
+  cout << "l4 after incrementing " << l4 << endl;
   return 0;
 }
 #endif

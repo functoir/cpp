@@ -52,7 +52,7 @@ public:
   virtual void set(int index, T value) = 0;
 
   /** Get the size of the List. */
-  virtual size_t size() = 0;
+  virtual int size() = 0;
 
   /** Clear the List. */
   virtual void clear() = 0;
@@ -92,6 +92,8 @@ public:
    * 
    */
   virtual int lastIndexOf(T value) = 0;
+
+  virtual T &operator[](int index) = 0;
 
   // /**
   //  * @brief Inject value into LinkedList.

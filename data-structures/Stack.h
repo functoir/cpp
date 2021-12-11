@@ -43,7 +43,7 @@ class Stack {
      * 
      * @return int: The size of the stack.
      */
-    virtual size_t size() = 0;
+    virtual int size() = 0;
 
     /**
      * @brief Get valus at top of Stack, but don't remove it from the stack.
