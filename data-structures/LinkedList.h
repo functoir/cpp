@@ -268,8 +268,8 @@ public:
    * @param list: LinkedList containing values.
    * @return ostream&: ostream with injected values.
    */
-  template <typename U>
-  friend ostream &operator<< (ostream& outs, const LinkedList<U> &list);
+  // template <typename U>
+  friend ostream &operator<< (ostream& outs, const LinkedList<T> &list);
 
   /**
    * @brief Operator `>>` overload.
@@ -279,8 +279,8 @@ public:
    * @param list: LinkedList to inject values.
    * @return istream&: istream with extracted values.
    */
-  template <typename U>
-  friend void operator>> (istream& ins, const LinkedList<U> &list);
+  // template <typename U>
+  friend void operator>> (istream& ins, const LinkedList<T> &list);
 
   /**
    * @brief += operator overload.
@@ -292,7 +292,7 @@ public:
    * @param list2 Other List.
    * @return LinkedList<V>& List reference. Allows reference chaining.
    */
-  template <typename V>
+  // template <typename V>
   LinkedList<T> &operator+=(LinkedList<T> &list, LinkedList<T> &list2);
 
   /**
@@ -305,7 +305,7 @@ public:
    * 
    * @tparam T 
    */
-  template <typename T>
+  // template <typename V>
   LinkedList<T> &operator+(LinkedList<T> &list, LinkedList<T> &list2)
 };
 
